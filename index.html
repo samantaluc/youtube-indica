@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Busca de Músicas no YouTube</title>
+</head>
+<body>
+    <h1>Busca de Músicas no YouTube</h1>
+    <input type="text" id="tagInput" placeholder="Insira uma tag">
+    <button onclick="buscarMusicas()">Buscar</button>
+    <div id="resultado"></div>
+
+    <script>
+        function buscarMusicas() {
+            const tagInput = document.getElementById('tagInput').value;
+            const resultado = document.getElementById('resultado');
+
+            // Envia a tag para o servidor Python via AJAX
+            fetch('/buscar', {
+                method: 'POST',
+                body: JSON.stringify({ tag: tagInput }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                resultado.innerHTML = data.resultado;
+            });
+        }
+    </script>
+</body>
+</html>
